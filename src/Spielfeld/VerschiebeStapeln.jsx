@@ -5,8 +5,8 @@ import {cardsData} from "./Cards/importCards"
 
 
 function VerschiebeStapeln() {
-    const [cardDeck, setCardDeck] = useState(cardsData) 
-    const refCardDeck = useRef(cardsData)
+	const [cardDeck, setCardDeck] = useState(cardsData) 
+    const refCardDeck = useRef([])
 
     const [vs1, setvs1] = useState([])
     const [vs2, setvs2] = useState([])
@@ -26,30 +26,40 @@ function VerschiebeStapeln() {
     const vs7LC = useRef()
 
     const selectedCard = useRef([])
-
+	const [startNum, setStartNum] = useState(0)
     
   const  [ready, setReady] = useState(false)
 
   useEffect(() => {
-    randomizeCards()
+    setStartNum(1)
+	setTimeout(() => {setStartNum(2); setReady(true)}, 300)
+	
+
     }, [])
 
+	setTimeout(() => {
 
-    async function randomizeCards() {
+	if(startNum === 1) 
+	randomizeCards()
+	}, 300)
+
+    function randomizeCards() {
 
 
-        var tempArr = cardsData;
-    
-            for(let i = tempArr.length - 1; i > 0; i--) {
-                var j = Math.floor(Math.random() * i-1);
-                [tempArr[i], tempArr[j]] = [tempArr[j], tempArr[i]]
+        var tempCards = [...cardsData];
+            for(let n = tempCards.length - 1; n > 1; n--) {
+                let j = Math.floor(Math.random() * n);
+				let temp = tempCards[n];
+				tempCards[n] = tempCards[j]
+				tempCards[j] = temp
             }
     
-            
-            refCardDeck.current = tempArr
 
 
-		setCardDeck(tempArr)
+            refCardDeck.current = [...tempCards]
+
+
+		setCardDeck(refCardDeck.current)
 
         kartenVerteilen()
 
@@ -65,7 +75,6 @@ function VerschiebeStapeln() {
 		let vs2TempArr = [refCardDeck.current[26], refCardDeck.current[25]]
 		let vs1TempArr = [refCardDeck.current[24]]
 
-        
 
 		vs1LC.current = vs1TempArr
 		vs2LC.current = vs2TempArr
@@ -84,7 +93,6 @@ function VerschiebeStapeln() {
       	setvs2([...vs2TempArr])
       	setvs1([...vs1TempArr])
 
-        setReady(true)
 
         showUpperCards()
 
@@ -110,7 +118,7 @@ function VerschiebeStapeln() {
 			tempArr2[1].visible = true
 			tempArr1[0].visible = true
 	
-	
+			
 			setvs1(tempArr1)
 			setvs2(tempArr2)
 			setvs3(tempArr3)
@@ -118,12 +126,16 @@ function VerschiebeStapeln() {
 			setvs5(tempArr5)
 			setvs6(tempArr6)
 			setvs7(tempArr7)
+
+
 	
 	
 	
 		}, 400)
 		
 	}
+
+
 
     function selectOrMoveCard(card) {
 
