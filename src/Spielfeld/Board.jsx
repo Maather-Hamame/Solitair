@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import "./board.css"
 import umgedrehteKarte from "./Cards/umgedrehte_karte.png";
 import VerschiebeStapeln from './VerschiebeStapeln';
+import ZufallsKarte from './zufallsKarte';
 
 import {cardsData} from "./Cards/importCards"
 
@@ -22,15 +23,12 @@ function Board() {
 
   return (
     <div id='board'>
-        <div id='zufaelligeKartenStapel'>{/*oben rechts*/}
-            <button id='naechsteKarte'><img src={umgedrehteKarte} alt="" /></button>
-            <div id='zufallskarte'></div>
-        </div> 
+      <ZufallsKarte />
         <div id='vierStapeln'>{/*oben links*/}
-            <div id='stapel1' className='gewinnStapel'></div>
-            <div id='stapel2' className='gewinnStapel'></div>
-            <div id='stapel3' className='gewinnStapel'></div>
-            <div id='stapel4' className='gewinnStapel'></div>
+            <div id='pikStapel' className='gewinnStapel'></div>
+            <div id='kreuzStapel' className='gewinnStapel'></div>
+            <div id='herzStapel' className='gewinnStapel'></div>
+            <div id='karoStapel' className='gewinnStapel'></div>
         </div> 
 		<VerschiebeStapeln/>
     </div>
