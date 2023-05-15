@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import "./board.css"
 import umgedrehteKarte from "./Cards/umgedrehte_karte.png";
 import VerschiebeStapeln from './VerschiebeStapeln';
-import ZufallsKarte from './zufallsKarte';
+import ZufallsKarte from './zufallsKarte'; 
 
 import {cardsData} from "./Cards/importCards"
 
