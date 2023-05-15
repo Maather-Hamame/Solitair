@@ -19,18 +19,22 @@ function Board() {
   const [zk, setZk] = useState([])
 
 
+  function updateCurrentDeck(newDeck) {
+    alert("test")
+    setCardDeck(newDeck)
+  }
 	
 
   return (
     <div id='board'>
-      <ZufallsKarte />
+      <ZufallsKarte currentDeck={cardDeck}/>
         <div id='vierStapeln'>{/*oben links*/}
             <div id='pikStapel' className='gewinnStapel'></div>
             <div id='kreuzStapel' className='gewinnStapel'></div>
             <div id='herzStapel' className='gewinnStapel'></div>
             <div id='karoStapel' className='gewinnStapel'></div>
         </div> 
-		<VerschiebeStapeln/>
+		<VerschiebeStapeln updateDeck={updateCurrentDeck}/>
     </div>
   )
 }

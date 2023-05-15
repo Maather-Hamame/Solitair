@@ -4,7 +4,7 @@ import {cardsData} from "./Cards/importCards"
 
 
 
-function VerschiebeStapeln() {
+function VerschiebeStapeln({updateDeck}) {
 	const [cardDeck, setCardDeck] = useState(cardsData) 
     const refCardDeck = useRef([])
 
@@ -62,6 +62,7 @@ function VerschiebeStapeln() {
 		setCardDeck(refCardDeck.current)
 
         kartenVerteilen()
+		updateDeck()
 
 	}
 
