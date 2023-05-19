@@ -3,7 +3,7 @@ import "./board.css"
 import umgedrehteKarte from "./Cards/umgedrehte_karte.png";
 import VerschiebeStapeln from './VerschiebeStapeln';
 import ZufallsKarte from './zufallsKarte'; 
-import { getDeck, updateDeck, deck, newDeck } from './DeckControls';
+import { getDeck, updateDeck, deck, newDeck, randomizeCards } from './DeckControls';
 
 import {cardsData} from "./Cards/importCards"
 import GewinnStapel from './GewinnStapel';
@@ -13,14 +13,11 @@ function Board() {
 
   const cardDeckRef = useRef(cardsData)
 
-  var gStapel = <GewinnStapel/>
+  const gewinnKey = useRef(Math.random())
+
+
   
   
-  const [gs1, setgs1] = useState([])
-  const [gs2, setgs2] = useState([])
-  const [gs3, setgs3] = useState([])
-  const [gs4, setgs4] = useState([])
-  const [updateBoard, setUpdateBoard] = useState(0)
   
   
   const readyZKStapel = useRef(false)
@@ -29,17 +26,26 @@ function Board() {
     readyZKStapel.current = true
   }
 
+  
+  const updategBoard = () => {
+
+      setGStapel(<GewinnStapel updateB={updategBoard} key={Math.random()}/>)
+      //updateDeck()
+  }
+
+  const [gStapel, setGStapel] = useState(<GewinnStapel key={gewinnKey.current} updateB={updategBoard}/>)
+
   useEffect(() => {
-    gStapel = <GewinnStapel/>
-  }, [deck])
+    randomizeCards()
+  }, [])
 
 
 
   return (
     <div id='board'>
-      <ZufallsKarte />
-        {gStapel}
-		<VerschiebeStapeln showZK={showZKStapel}/>
+      <ZufallsKarte updateB={updategBoard}/>
+      {gStapel}
+		<VerschiebeStapeln showZK={showZKStapel} updateB={updategBoard}/>
     </div>
   )
 }

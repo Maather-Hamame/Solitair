@@ -9,7 +9,7 @@ import Karo0 from "./Cards/Karo0.png"
 
 
 
-function GewinnStapel() {
+function GewinnStapel({updateB}) {
 	const [cardDeck, setCardDeck] = useState(cardsData) 
 
     const gs1Ref = useRef()
@@ -42,53 +42,51 @@ function GewinnStapel() {
             visible: true, image: Karo0
         },
     ]
-    
-
 
 
   return (
     <div id='vierStapeln'>
         <div id='pikStapel' className='gewinnStapel'>
-            <img id="pik0" className='card' src={Pik0} alt='' onClick={() => selectOrMoveCard(startCards[0])}/>
+            <img id="pik0" className='card' src={Pik0} alt='' onClick={() => selectOrMoveCard(startCards[0], updateB)}/>
 				{	
 					alleGS[0].map(card => {
                         if(typeof card != "undefined"){
 						return(
-							<img key={Math.random()} onClick={() => selectOrMoveCard(card)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
+							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
                             )
                         }
 					})
 				}	
 		</div>
         <div id='kreuzStapel' className='gewinnStapel'>
-            <img id="kreuz0" className='card' src={Kreuz0}alt='' onClick={() => selectOrMoveCard(startCards[1])}/>
+            <img id="kreuz0" className='card' src={Kreuz0}alt='' onClick={() => selectOrMoveCard(startCards[1], updateB)}/>
 				{
 					alleGS[1].map(card => {
                         if(typeof card != "undefined"){
 						return(
-							<img key={Math.random()} onClick={() => selectOrMoveCard(card)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
+							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
 						)}
 					})
 				}	
 		</div>
         <div id='herzStapel' className='gewinnStapel'>
-            <img id="herz0" className='card' src={Herz0} alt='' onClick={() => selectOrMoveCard(startCards[2])}/>
+            <img id="herz0" className='card' src={Herz0} alt='' onClick={() => selectOrMoveCard(startCards[2], updateB)}/>
 				{
 					alleGS[2].map(card => {
                         if(typeof card != "undefined"){
 						return(
-							<img key={Math.random()} onClick={() => selectOrMoveCard(card)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
+							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
 						)}
 					})
 				}	
 		</div>
             <div id='karoStapel' className='gewinnStapel'>
-            <img id="karo0" className='card' src={Karo0} alt='' onClick={() => selectOrMoveCard(startCards[3])}/>
+            <img id="karo0" className='card' src={Karo0} alt='' onClick={() => selectOrMoveCard(startCards[3], updateB)}/>
 				{
 					alleGS[3].map(card => {
                         if(typeof card != "undefined"){
 						return(
-							<img key={Math.random()} onClick={() => selectOrMoveCard(card)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
+							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
 						)}
 					})
 				}	

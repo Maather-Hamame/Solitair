@@ -5,7 +5,7 @@ import umgedrehteKarte from "./Cards/umgedrehte_karte.png";
 import { zufallsKarten,  selectOrMoveCard } from './DeckControls';
 
 
-function ZufallsKarte() {
+function ZufallsKarte({updateB}) {
  
   const [currentZufallsKarte, setCurrentZufallskarte] = useState({})
   const kartenIndex = useRef(0)
@@ -14,6 +14,7 @@ function ZufallsKarte() {
 
   
   function nextCard(index) {
+
 
     for(let i = 0; i < zufallsKarten.length; i++){
       zufallsKarten[i].visible = false;
@@ -34,7 +35,7 @@ function ZufallsKarte() {
   var Karten = []
 
   for(let i = 0; i < zufallsKarten.length; i++){
-    Karten[i] = <img src={zufallsKarten[i].image} key={Math.random()} onClick={() => selectOrMoveCard(zufallsKarten[i])} id={zufallsKarten[i].visible ? (zufallsKarten[i].type + zufallsKarten[i].number) : null} className={'card zk ' + (!zufallsKarten[i].visible ? "notVisible " : "") + (zufallsKarten[i].type === "kreuz" ? "black" : zufallsKarten[i].type === "pik" ? "black" : "red")}  alt=""/>
+    Karten[i] = <img src={zufallsKarten[i].image} key={Math.random()} onClick={() => selectOrMoveCard(zufallsKarten[i], updateB)} id={zufallsKarten[i].visible ? (zufallsKarten[i].type + zufallsKarten[i].number) : null} className={'card zk ' + (!zufallsKarten[i].visible ? "notVisible " : "") + (zufallsKarten[i].type === "kreuz" ? "black" : zufallsKarten[i].type === "pik" ? "black" : "red")}  alt=""/>
   }
 
   return (

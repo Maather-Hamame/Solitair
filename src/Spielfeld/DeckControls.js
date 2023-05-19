@@ -40,6 +40,8 @@ export function randomizeCards() {
         deck[i].currentPosition = "zk"
        zufallsKarten[i] = deck[i]
     }
+
+    newDeck = deck
 }
 
 var selectedCards = []
@@ -60,13 +62,15 @@ function addToGS(gsType, card) {
             break;
     }
 
-    var currentIndex = deck.findIndex(c =>{ 
+    var currentIndex = newDeck.findIndex(c =>{ 
         return c.type == card.type && c.number == card.number
     })
 
     removeFromOrgin(card)
 
-    newdeck[currentIndex].currentPosition = "gs"
+    newDeck[currentIndex].currentPosition = "gs"
+    console.log(deck)
+    console.log(newDeck)
 
 }
 
@@ -98,9 +102,10 @@ function removeFromOrgin(card){
 }
 
 
-export function selectOrMoveCard(card) {
+export function selectOrMoveCard(card, updateB) {
 
-    console.log(card)
+    updateB()
+
 
     let currentCardId = card.type + card.number;
     let currentCardImg = document.getElementById(currentCardId)
@@ -109,7 +114,6 @@ export function selectOrMoveCard(card) {
     let firstCardId = selectedCards[1]
 
     let firstCardImg = document.getElementById(firstCardId)
-
 
 
     if(card.visible) {
@@ -127,7 +131,6 @@ export function selectOrMoveCard(card) {
             currentCardImg.classList.remove("selected")
          } else {
             if(firstCard.currentPosition !== "gs" && card.currentPosition === "gs"){
-                alert("test")
                 if(firstCard.type === card.type && firstCard.number == (card.number + 1)){
                     addToGS(firstCard.type, firstCard)
                     firstCardImg.classList.remove("selected")
@@ -138,6 +141,7 @@ export function selectOrMoveCard(card) {
             } 
          }
         }
+
 
     }
 }
