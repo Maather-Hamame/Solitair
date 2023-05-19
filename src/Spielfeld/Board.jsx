@@ -3,20 +3,25 @@ import "./board.css"
 import umgedrehteKarte from "./Cards/umgedrehte_karte.png";
 import VerschiebeStapeln from './VerschiebeStapeln';
 import ZufallsKarte from './zufallsKarte'; 
-import { getDeck, updateDeck, deck } from './DeckControls';
+import { getDeck, updateDeck, deck, newDeck } from './DeckControls';
 
 import {cardsData} from "./Cards/importCards"
+import GewinnStapel from './GewinnStapel';
 
 function Board() {
 	const [cardDeck, setCardDeck] = useState(cardsData) 
 
   const cardDeckRef = useRef(cardsData)
+
+  var gStapel = <GewinnStapel/>
   
   
   const [gs1, setgs1] = useState([])
   const [gs2, setgs2] = useState([])
   const [gs3, setgs3] = useState([])
   const [gs4, setgs4] = useState([])
+  const [updateBoard, setUpdateBoard] = useState(0)
+  
   
   const readyZKStapel = useRef(false)
 
@@ -24,17 +29,16 @@ function Board() {
     readyZKStapel.current = true
   }
 
+  useEffect(() => {
+    gStapel = <GewinnStapel/>
+  }, [deck])
+
 
 
   return (
     <div id='board'>
       <ZufallsKarte />
-        <div id='vierStapeln'>{/*oben links*/}
-            <div id='pikStapel' className='gewinnStapel'></div>
-            <div id='kreuzStapel' className='gewinnStapel'></div>
-            <div id='herzStapel' className='gewinnStapel'></div>
-            <div id='karoStapel' className='gewinnStapel'></div>
-        </div> 
+        {gStapel}
 		<VerschiebeStapeln showZK={showZKStapel}/>
     </div>
   )

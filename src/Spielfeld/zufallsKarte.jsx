@@ -1,30 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, {  useRef, useState } from 'react'
 import "./board.css"
 import umgedrehteKarte from "./Cards/umgedrehte_karte.png";
-import VerschiebeStapeln from './VerschiebeStapeln';
 
-import {cardsData} from "./Cards/importCards"
-import { getDeck, updateDeck, zufallsKarten, deck, selectOrMoveCard } from './DeckControls';
+import { zufallsKarten,  selectOrMoveCard } from './DeckControls';
 
 
 function ZufallsKarte() {
  
   const [currentZufallsKarte, setCurrentZufallskarte] = useState({})
-  const zufallskartenRef = useRef()
   const kartenIndex = useRef(0)
 
-  const readyRef = useRef(false)
 
 
   
   function nextCard(index) {
-    console.log(zufallskartenRef.current)
 
     for(let i = 0; i < zufallsKarten.length; i++){
       zufallsKarten[i].visible = false;
     }
 
-    if(kartenIndex.current + 1 == zufallsKarten.length){
+    if(kartenIndex.current + 1 === zufallsKarten.length){
       kartenIndex.current = 0;
 
     } else {
@@ -39,7 +34,7 @@ function ZufallsKarte() {
   var Karten = []
 
   for(let i = 0; i < zufallsKarten.length; i++){
-    Karten[i] = <img src={zufallsKarten[i].image} onClick={() => selectOrMoveCard(zufallsKarten[i])} id={currentZufallsKarte.visible ? (currentZufallsKarte.type + currentZufallsKarte.number) : null} className={'card zk ' + (!zufallsKarten[i].visible ? "notVisible" : null)}  alt=""/>
+    Karten[i] = <img src={zufallsKarten[i].image} key={Math.random()} onClick={() => selectOrMoveCard(zufallsKarten[i])} id={zufallsKarten[i].visible ? (zufallsKarten[i].type + zufallsKarten[i].number) : null} className={'card zk ' + (!zufallsKarten[i].visible ? "notVisible " : "") + (zufallsKarten[i].type === "kreuz" ? "black" : zufallsKarten[i].type === "pik" ? "black" : "red")}  alt=""/>
   }
 
   return (

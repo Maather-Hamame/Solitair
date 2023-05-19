@@ -29,10 +29,6 @@ function VerschiebeStapeln({showZK}) {
 	setReady(true)
     }, [])
 
-
-
-
-    
 	
 	function showUpperCards() {
 
