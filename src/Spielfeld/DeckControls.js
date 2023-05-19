@@ -44,6 +44,31 @@ export function randomizeCards() {
     newDeck = deck
 }
 
+export function showUpperCards() {
+
+    for(let i = 0; i < alleVS.length; i++) {
+        for(let j = 0; j < alleVS[i].length; j++) {
+            alleVS[i][j].visible = false
+        }
+    }
+
+    for(let i = 0; i < 7; i++) {
+        alleVS[i][alleVS[i].length - 1].visible = true
+        var currentIndex = deck.findIndex(c =>{ 
+            return c.type == alleVS[i][alleVS[i].length - 1].type && c.number == alleVS[i][alleVS[i].length - 1]
+        })
+        if(currentIndex != -1) {
+        deck[currentIndex].visible = true
+        }
+    }
+    for(let i = 0; i < alleVS.length; i++) {
+        if(typeof alleVS[i][0] !== undefined) {
+            alleVS[i][alleVS[i].length - 1].visible = true
+
+        }
+    }
+}
+
 var selectedCards = []
 
 function addToGS(gsType, card) {
@@ -97,6 +122,7 @@ function removeFromOrgin(card){
         }
         
         alleVS[counter].splice(currentIndex, 1)
+        showUpperCards()
         console.log(alleVS)
     }
 }
@@ -104,10 +130,15 @@ function removeFromOrgin(card){
 
 export function selectOrMoveCard(card, updateB) {
 
+    if(selectedCards.length >=3) {
+        selectedCards = []
+    }
+
     updateB()
 
 
     let currentCardId = card.type + card.number;
+    console.log(currentCardId)
     let currentCardImg = document.getElementById(currentCardId)
 
     let firstCard = selectedCards[0]
@@ -120,9 +151,10 @@ export function selectOrMoveCard(card, updateB) {
 
         if(typeof firstCard == 'undefined') {
             // wenn davor keine Karte gewählt wurde
-
+            alert("selected")
             selectedCards = [card, currentCardId]
-            currentCardImg.classList.add("selected")
+            console.log(currentCardImg)
+            currentCardImg.className = currentCardImg.className + " selected"
 
         } else {
          if(firstCardId == currentCardId) {

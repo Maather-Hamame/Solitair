@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import umgedrehteKarte from "./Cards/umgedrehte_karte.png";
 import {cardsData} from "./Cards/importCards"
-import { getDeck, updateDeck, selectOrMoveCard, deck, randomizeCards, alleVS } from './DeckControls';
+import { getDeck, updateDeck, selectOrMoveCard, showUpperCards, deck, randomizeCards, alleVS } from './DeckControls';
 
 
 
@@ -31,28 +31,7 @@ function VerschiebeStapeln({showZK, updateB}) {
     }, [])
 
 	
-	function showUpperCards() {
 
-		for(let i = 0; i < alleVS.length; i++) {
-			for(let j = 0; j < alleVS[i].length; j++) {
-				alleVS[i][j].visible = false
-			}
-		}
-
-		for(let i = 0; i < 7; i++) {
-			alleVS[i][alleVS[i].length - 1].visible = true
-			var currentIndex = deck.findIndex(c =>{ 
-				return c.type == alleVS[i][alleVS[i].length - 1].type && c.number == alleVS[i][alleVS[i].length - 1]
-			})
-			deck[currentIndex].visible = true
-		}
-			alleVS[1][alleVS[1].length - 1].visible = true
-			alleVS[2][alleVS[2].length - 1].visible = true
-			alleVS[3][alleVS[3].length - 1].visible = true
-			alleVS[4][alleVS[4].length - 1].visible = true
-			alleVS[5][alleVS[5].length - 1].visible = true
-			alleVS[6][alleVS[6].length - 1].visible = true	
-	}
 
 
 

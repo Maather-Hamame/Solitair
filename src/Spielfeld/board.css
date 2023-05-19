@@ -112,8 +112,7 @@
     transform: rotateY(180deg);
     
 }
-
-.card.selected{
+.selected{
     height: 210px;
     transform: translateX(-5px);
 }
