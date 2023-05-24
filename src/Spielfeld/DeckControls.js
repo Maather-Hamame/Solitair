@@ -4,7 +4,7 @@ export var deck = [...cardsData]
 export var newDeck = [...cardsData]
 
 export var zufallsKarten = [];
-export var alleVS = []
+export var alleVS = [[], [], [], [], [], [], []]
 export var alleGS = [[], [], [], []]
 
 export function updateDeck(newDeck) {
@@ -46,23 +46,21 @@ export function randomizeCards() {
 
 export function showUpperCards() {
 
-    for(let i = 0; i < alleVS.length; i++) {
-        for(let j = 0; j < alleVS[i].length; j++) {
-            alleVS[i][j].visible = false
-        }
-    }
-
     for(let i = 0; i < 7; i++) {
-        alleVS[i][alleVS[i].length - 1].visible = true
-        var currentIndex = deck.findIndex(c =>{ 
+        if(typeof alleVS[i][alleVS[i].length - 1] !== "undefined"){
+            alleVS[i][alleVS[i].length - 1].visible = true
+
+        var currentIndex = newDeck.findIndex(c =>{ 
             return c.type == alleVS[i][alleVS[i].length - 1].type && c.number == alleVS[i][alleVS[i].length - 1]
         })
+        
         if(currentIndex != -1) {
-        deck[currentIndex].visible = true
+        newDeck[currentIndex].visible = true
         }
     }
+    }
     for(let i = 0; i < alleVS.length; i++) {
-        if(typeof alleVS[i][0] !== undefined) {
+        if(typeof alleVS[i][0] !== "undefined") {
             alleVS[i][alleVS[i].length - 1].visible = true
 
         }
@@ -70,6 +68,7 @@ export function showUpperCards() {
 }
 
 var selectedCards = []
+export var selectedCardId = ""
 
 function addToGS(gsType, card) {
     switch (gsType){
@@ -99,31 +98,60 @@ function addToGS(gsType, card) {
 
 }
 
-function removeFromOrgin(card){
+function moveInVs(currentCard, firstCard, firstVs, newVs, cardIndexInFirstVS, isZk) {
+
+    var iszk = isZk || false;
+
+    var newVsIndex = -1
+    var counter = 0
+
+    var currentIndex = newDeck.findIndex(c =>{ 
+        return c.type == firstCard.type && c.number == firstCard.number
+    })
+        alleVS[newVs][alleVS[newVs].length] = firstCard 
+        console.log(alleVS[newVs])
+
+
+    if(!iszk) {
+        removeFromOrgin(firstCard, firstVs, cardIndexInFirstVS)
+    } else {
+        removeFromOrgin(firstCard)
+
+    }
+
+    newDeck[currentIndex].currentPosition = "vs"
+
+
+}
+
+function removeFromOrgin(card, vsIndex, currentCardIndex){
     if(card.currentPosition == "zk"){
         var currentIndex = zufallsKarten.findIndex(c =>{ 
             return c.type == card.type && c.number == card.number
         })
         zufallsKarten.splice(currentIndex, 1)
-        console.log(zufallsKarten)
 
     } else if(card.currentPosition == "vs"){
 
-        var currentIndex = -1;
-        var counter = 0
-       while(currentIndex == -1) {
-            currentIndex = alleVS[counter].findIndex(c =>{ 
-                return c.type == card.type && c.number == card.number
-            })
-            if(currentIndex != -1) {
-                break;
+        if(typeof vsIndex === "undefined"){
+            var currentIndex = -1;
+            var counter = 0
+           while(currentIndex == -1) {
+                currentIndex = alleVS[counter].findIndex(c =>{ 
+                    return c.type == card.type && c.number == card.number
+                })
+                if(currentIndex != -1) {
+                    break;
+                }
+                counter++;
             }
-            counter++;
+            
+            alleVS[counter].splice(currentIndex, 1)    
+        } else {
+            alleVS[vsIndex].splice(currentCardIndex, 1)    
+
         }
-        
-        alleVS[counter].splice(currentIndex, 1)
-        showUpperCards()
-        console.log(alleVS)
+       showUpperCards()
     }
 }
 
@@ -138,7 +166,6 @@ export function selectOrMoveCard(card, updateB) {
 
 
     let currentCardId = card.type + card.number;
-    console.log(currentCardId)
     let currentCardImg = document.getElementById(currentCardId)
 
     let firstCard = selectedCards[0]
@@ -147,33 +174,101 @@ export function selectOrMoveCard(card, updateB) {
     let firstCardImg = document.getElementById(firstCardId)
 
 
+
     if(card.visible) {
 
         if(typeof firstCard == 'undefined') {
             // wenn davor keine Karte gewählt wurde
-            alert("selected")
+
+             if(card.currentPosition.includes("vs")) {
+                alert("test")
+             }
+
             selectedCards = [card, currentCardId]
-            console.log(currentCardImg)
             currentCardImg.className = currentCardImg.className + " selected"
+            selectedCardId = currentCardId;
+
 
         } else {
+
          if(firstCardId == currentCardId) {
             // entferne Selection wenn selbe Karte angeklickt wird
             selectedCards = []
             currentCardImg.classList.remove("selected")
+            selectedCardId = ""
          } else {
+
             if(firstCard.currentPosition !== "gs" && card.currentPosition === "gs"){
                 if(firstCard.type === card.type && firstCard.number == (card.number + 1)){
+
                     addToGS(firstCard.type, firstCard)
                     firstCardImg.classList.remove("selected")
                     currentCardImg.classList.remove("selected")
                     selectedCards = []
-                    console.log(alleGS)
+                    selectedCardId = ""
+
+                } else {
+
+                    firstCardImg.classList.remove("selected")
+                    currentCardImg.classList.remove("selected")
+                    selectedCards = []
+                    selectedCardId = ""
+
                 }
+
             } 
+            else if(firstCard.currentPosition !== "gs" && card.currentPosition === "vs") {
+                if(firstCard.color !== card.color && firstCard.number == (card.number - 1)){
+                    let firstCardIndex = -1;
+                    let firstVSIndex = 0;
+                    let currentCardIndex = -1;
+                    let newVSIndex = 0;
+                    if(firstCard.currentPosition === "vs") {
+                    while(firstCardIndex == -1) {
+                        firstCardIndex = alleVS[firstVSIndex].findIndex(c =>{ 
+                            return c.type == firstCard.type && c.number == firstCard.number
+                        })
+                        if(firstCardIndex != -1) {
+                            break;
+                        }
+                        firstVSIndex++;
+                    } 
+                 } else {
+                    firstCardIndex = zufallsKarten.findIndex(c =>{ 
+                        return c.type == firstCard.type && c.number == firstCard.number
+                    })
+                 }
+
+                    while(currentCardIndex == -1) {
+                        currentCardIndex = alleVS[newVSIndex].findIndex(c =>{ 
+                            return c.type == card.type && c.number == card.number
+                        })
+                        if(currentCardIndex != -1) {
+                            break;
+                        }
+                        newVSIndex++;
+                    }
+                    if(firstCard.currentPosition === "vs") {
+                        moveInVs(card, firstCard, firstVSIndex, newVSIndex, firstCardIndex)
+                    } else {
+                        moveInVs(card, firstCard, firstVSIndex, newVSIndex, firstCardIndex, true)
+
+                    }
+                    firstCardImg.classList.remove("selected")
+                    currentCardImg.classList.remove("selected")
+                    selectedCards = []
+                    selectedCardId = ""
+                } else {
+                    firstCardImg.classList.remove("selected")
+                    currentCardImg.classList.remove("selected")
+                    selectedCards = []
+                    selectedCardId = ""
+                } 
+            }  
          }
         }
 
+        console.log(selectedCards)
 
     }
 }

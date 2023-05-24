@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import umgedrehteKarte from "./Cards/umgedrehte_karte.png";
 import {cardsData} from "./Cards/importCards"
-import { getDeck, updateDeck, selectOrMoveCard, showUpperCards, deck, randomizeCards, alleVS } from './DeckControls';
+import { getDeck, updateDeck, selectOrMoveCard, showUpperCards, deck, randomizeCards, selectedCardId, alleVS } from './DeckControls';
 
 
 
@@ -46,7 +46,7 @@ function VerschiebeStapeln({showZK, updateB}) {
 				{	
 					alleVS[0].map(card => {
 						return(
-							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
+							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition === "vs" ? "vsCard" : card.currentPosition === "gs" ? "gsCard" : "zk") + (selectedCardId === (card.type + card.number) ? " selected" : "")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
                             )
 					})
 				}	
@@ -55,7 +55,7 @@ function VerschiebeStapeln({showZK, updateB}) {
 				{
 					alleVS[1].map(card => {
 						return(
-							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
+							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")  + (selectedCardId === (card.type + card.number) ? " selected" : "")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
 						)
 					})
 				}	
@@ -64,7 +64,7 @@ function VerschiebeStapeln({showZK, updateB}) {
 				{
 					alleVS[2].map(card => {
 						return(
-							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
+							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk") + (selectedCardId === (card.type + card.number) ? " selected" : "")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
 						)
 					})
 				}	
@@ -73,7 +73,7 @@ function VerschiebeStapeln({showZK, updateB}) {
 				{
 					alleVS[3].map(card => {
 						return(
-							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
+							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk") + (selectedCardId === (card.type + card.number) ? " selected" : "")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
 						)
 					})
 				}	
@@ -82,7 +82,7 @@ function VerschiebeStapeln({showZK, updateB}) {
 				{
 					alleVS[4].map(card => {
 						return(
-							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
+							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk") + (selectedCardId === (card.type + card.number) ? " selected" : "")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
 						)
 					})
 				}	
@@ -91,7 +91,7 @@ function VerschiebeStapeln({showZK, updateB}) {
 				{
 					alleVS[5].map(card => {
 						return(
-							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
+							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk") + (selectedCardId === (card.type + card.number) ? " selected" : "")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
 						)
 					})
 				}	
@@ -100,7 +100,7 @@ function VerschiebeStapeln({showZK, updateB}) {
 				{
 					alleVS[6].map(card => {
 						return(
-							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
+							<img key={Math.random()} onClick={() => selectOrMoveCard(card, updateB)} id={card.visible ? (card.type + card.number) : null} className={'card ' + (card.currentPosition == "vs" ? "vsCard" : card.currentPosition == "gs" ? "gsCard" : "zk") + (selectedCardId === (card.type + card.number) ? " selected" : "")} src={card.visible ? card.image : umgedrehteKarte} alt={card.number}/>
 						)
 					})
 				}	
